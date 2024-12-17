@@ -14,7 +14,6 @@ class RegisterView(CreateAPIView):
     queryset = UserInfo.objects.all()
     serializer_class = RegisterSerializer
     
-    
 # 사용자 세부 사항 View
 class UserDetailView(RetrieveAPIView):
     serializer_class = UserSerializer
