@@ -36,26 +36,20 @@ class LogoutView(APIView):
         logout(request)
         return Response({'message' : '로그아웃 완료'})
     
-# class PatchLogoutView(LogoutView):
-#     http_method_names = ["get", "post", "options"]
 
-#     def get(self, request, *args, **kwargs):
-#         return self.post(request, *args, **kwargs)
+# 로그인 View
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
 
-
-# # 로그인 View
-# class LoginView(APIView):
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-
-#         # 사용자 인증
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)  # 세션 생성
-#             return Response({"message": "로그인 완료"})
-#         else:
-#             return Response({"error": "잘못된 접근으로 다시 확인해주세요."})
+        # 사용자 인증
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)  # 세션 생성
+            return Response({"message": "로그인 완료"})
+        else:
+            return Response({"error": "잘못된 접근으로 다시 확인해주세요."})
 
 # # 로그아웃 View
 # class LogoutView(APIView):

@@ -70,8 +70,7 @@ TEMPLATES = [
 ]
 
 
-LOGIN_REDIRECT_URL = '/user/userdetail/'
-# LOGOUT_REDIRECT_URL = '/user/login/'
+
 WSGI_APPLICATION = "Jay.wsgi.application"
 
 
@@ -95,6 +94,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length":4, }
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
