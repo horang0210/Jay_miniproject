@@ -14,8 +14,6 @@
 `$ pip install python>=3.10`</br>
 &rarr; python version은 3.10 이상이어야 django 5.x 버전을 지원함 </br>
 
----
-## Execution
 ### Virtual Environment 
 `$ python -m venv [venv 이름] `</br>
 `$ source [venv 이름]/bin/activate`  (windows에서 실행 시 `[venv 이름]\Scripts\activate`)</br>
@@ -29,5 +27,12 @@
 
 ### Get server code & Run server
 `$ git clone https://github.com/horang0210/Jay_miniproject_03`</br>
+`$ cd Jay`</br>
+`$ python manage.py runserver` &rarr; 8000번 포트로 올라간 server 확인</br>
+
+---
+## Execution
+### Get server code & Run server
+`$ source [venv 이름]/bin/activate`  (windows에서 실행 시 `[venv 이름]\Scripts\activate`)</br>
 `$ cd Jay`</br>
 `$ python manage.py runserver` &rarr; 8000번 포트로 올라간 server 확인</br>
