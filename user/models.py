@@ -18,7 +18,7 @@ class UserInfo(AbstractUser):
                                     max_length = 11)                                                # 전화번호(유효성 추가)
     
     def __str__(self):
-        return self.usernames
+        return self.username
 
 
 # class UserInfo(models.Model):

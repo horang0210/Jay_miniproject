@@ -2,8 +2,6 @@ from rest_framework import serializers
 from .models import UserInfo
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-# from django.utils.translation import gettext as _
-import re
 
 
 # 회원가입 Serializer
@@ -15,10 +13,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             name=validated_data['name'],
             phone_number=validated_data['phone_number'],
         ) 
-        # try : 
-        #     validate_password(UserInfo.password, user)
-        # except ValidationError as e:
-        #     {"password":"비밀번호 양식이 맞지 않습니다."}
         
         user.save()
         return user
@@ -34,30 +28,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"password_check": "비밀번호와 일치하지 않습니다."})
         return data
-    
-    # def validate(self, password, user=None):
-    #     if len(password) < 8:
-    #         raise ValidationError("비밀번호는 8자리 이상이어야 합니다.")
-    #     if not re.search(r"[a-zA-Z]", password):
-    #         raise ValidationError("비밀번호는 하나 이상의 영문이 포함되어야 합니다.")
-    #     if not re.search(r"\d", password):
-    #         raise ValidationError("비밀번호는 하나 이상의 숫자가 포함되어야 합니다.")
-    #     if not re.search(r"[!@#$%^&*()]", password):
-    #         raise ValidationError(
-    #             "비밀번호는 적어도 하나 이상의 특수문자(!@#$%^&*())가 포함되어야 합니다."
-    #         )
-    
-    # # password validatation 설정
-    # def validate(self, password, user=UserInfo):
-    #     if not re.search(r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-+]).{8,}$', password):
-    #         raise serializers.ValidationError(
-    #             {"password":"비밀번호는 영문, 숫자, 특수문자가 각각 1개 이상, 총 8자 이상이어야 합니다."}
-    #         )
-  
 
     
 # 사용자 정보 조회 Serializer
 class UserSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = UserInfo
         fields = ['username', 'name', 'phone_number']

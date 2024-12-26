@@ -13,28 +13,15 @@ class RegisterView(CreateAPIView):
     queryset = UserInfo.objects.all()
     serializer_class = RegisterSerializer
     
+    
 # 사용자 세부 사항 View
-class UserDetailView(RetrieveAPIView):
+class DetailView(RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return self.request.user
-    
-    
-# 로그아웃 View
-class LogoutView(APIView):
-    """
-    Djano 5 does not have GET logout route anymore, so Django Rest Framework UI can't log out.
-    This is a workaround until Django Rest Framework implements POST logout.
-    Details: https://github.com/encode/django-rest-framework/issues/9206
-    """
-    permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        logout(request)
-        return Response({'message' : '로그아웃 완료'}, status=200)
-    
 
 # 로그인 View
 class LoginView(APIView):
@@ -50,37 +37,14 @@ class LoginView(APIView):
         else:
             return Response({"error": "잘못된 접근으로 다시 확인해주세요."}, status=403)
 
-# # 로그아웃 View
-# class LogoutView(APIView):
-#     permission_classes = [IsAuthenticated]  # 인증된 사용자 확인
+        
+# 로그아웃 View
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
 
-#     def post(self, request):
-#         logout(request)  # 세션 삭제
-#         return Response({"message": "로그아웃 완료"})
-
-
-
-# class RegisterView(CreateAPIView):
-#     queryset = UserInfo.objects.all()
-#     serializer_class = RegisterSerializer
-
-# # 로그인 View
-# class LoginView(APIView):
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user:
-#             login(request, user)
-#             return Response({"message": "로그인 완료"})
-#         return Response({"error": "올바른 계정 정보가 아닙니다."})
-
-# # 로그아웃 View
-# class LogoutView(APIView):
-#     def post(self, request):
-#         logout(request)
-#         return Response({"message": "로그아웃 완료"})
-    
+    def get(self, request):
+        logout(request)
+        return Response({'message' : '로그아웃 완료'}, status=200)
 
 
 
