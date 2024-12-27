@@ -43,12 +43,12 @@ ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH
 
 
 # 컨테이너 빌드 시 사용자 이름을 받을 변수 정의
-# ARG USERNAME
+ARG USERNAME
 # ARG PASSWORD
 ENV USERNAME=${USERNAME}
 ENV HOME=/home/${USERNAME}
 
-# 컨테이너 내부에서 로그인 및 홈 디렉토리 생성
+# 컨테이너 내부에 사용자 홈 디렉토리 생성
 RUN useradd -m -s /bin/bash $USERNAME && \
     # echo "$USERNAME:$PASSWORD" | chpasswd && \
     usermod -aG sudo $USERNAME
@@ -78,15 +78,3 @@ RUN git clone https://github.com/wilicc/gpu-burn && \
     make && \
     cd ..
 
-# Python 패키지 설치를 위한 환경 설정
-COPY requirements.txt WORKDIR
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Django 서버 실행을 위한 기본 환경 변수 설정
-ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE $USERNAME.settings
-
-EXPOSE 8000
-
-# Django 서버 실행 명령
-CMD ["python", "manage.py", "runserver", "127.0.0.1:8000"]
