@@ -18,17 +18,22 @@ class ContainerView(APIView):
             return Response({"message": "컨테이너가 존재하지 않습니다."}, status=status.HTTP_204_NO_CONTENT)
 
     def post(self, request):
-        data = request.data
-        data['username'] = request.user.id  # 현재 로그인한 사용자의 ID로 설정
+        if Containers.objects.filter(username=request.user).exists():
+            return Response({"message": "이미 컨테이너를 가지고 있습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        data = {
+            'username': request.user.id,
+            'container_name': request.user.username,  # container_name = username
+            'is_created': True  
+        }
+
         serializer = ContainerSerializer(data=data, context={'request': request})  # request 객체 전달
         if serializer.is_valid():
-            serializer.save()   
-            # 사용자에 맞는 container 생성 및 실행
-            if serializer.data['is_created'] is True:   
-                os.system('docker build . --build-arg USERNAME='+str(request.user)+' -t '+str(data['container_name']))
-                # os.system('docker rename Jay_image' + data['username'])   # 이미 빌드된 이미지를 username으로 이름 변경
-                os.system('docker run -itd --gpus all '+ str(data['container_name']))
-                return Response("컨테이너가 생성되었습니다.")
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
 
+            os.system('docker build . --build-arg USERNAME='+str(request.user.username)+' -t '+str(request.user.username))
+            os.system('docker run -itd --gpus all '+str(request.user.username))
+
+            return Response({"message": "컨테이너가 생성되었습니다."}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

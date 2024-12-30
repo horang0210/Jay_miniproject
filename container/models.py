@@ -9,7 +9,7 @@ class Containers(models.Model):
                                  on_delete=models.CASCADE,
                                  db_column="username")                  # username (fk)
     container_name = models.CharField(max_length=150,
-                                      unique=True)  # container 이름
+                                      unique=True)                      # container 이름
     is_created = models.BooleanField(default=False, 
                                      null=False)                        # container 유무
     
