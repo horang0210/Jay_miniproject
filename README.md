@@ -1,25 +1,8 @@
 # On-boarding > Mini Project
 ## About
-### 1. Django, Django Rest Framework를 이용한 Login, 회원가입 API 구현
-  - Function
-    - ID, Password, 이름, 전화번호를 입력하는 회원가입 API
-    - ID, Password를 이용한 로그인 API & 로그아웃 API
-    - 사용자의 정보를 조회하는 API
-      - 사용자 정보 조회는 로그인한 사용자만 사용할 수 있음
-      - 사용자는 본인 정보만 조회할 수 있음
-
-### 2. Django, Django Rest Framework를 이용한 컨테이너 생성 API 구현
-  - Function
-    - 로그인 후 username과 동일한 명칭의 컨테이너를 생성 및 실행할 수 있는 API
-      - 컨테이너는 사용자당 1개만 생성 가능함
-      - 이미 컨테이너를 생성했을 경우 API 요청을 보내도 새로운 컨테이너를 생성할 수 없음
-      - 컨테이너 환경
-        - 기본 이미지: ubuntu 20.04
-        - CUDA: 11.8
-        - cuDNN: 8.6.0
-        - NCCL: 2.15.5
-        - Anaconda: latest(&rarr; 컨테이너 실행 시 로그인되는 계정의 홈 디렉토리 안에서만 사용 가능) 
-        - date: KST
+본 프로젝트는 On-boarding 과정에서 진행한 사용자별로 계정 정보 조회 및 컨테이너를 생성할 수 있도록 구현한 API 입니다. </br>
+- 사용자는 해당 API에서 회원가입 및 로그인을 통해 사용자 정보를 조회할 수 있습니다.
+- 사용자마다 독립적인 환경에서 머신러닝/딥러닝 연구가 가능한 컨테이너를 생성할 수 있습니다. 컨테이너는 사용자의 `username`으로 생성되며, 사용자당 1개씩 생성할 수 있습니다.
 
 ---
 ## Installation
@@ -41,32 +24,16 @@
 ### Get server code & Run server
 `$ git clone https://github.com/horang0210/Jay_miniproject.git`</br>
 `$ cd Jay`</br>
+`$ python manage.py makemigrations` </br>
+`$ python manage.py migrate` </br>
 `$ python manage.py runserver` &rarr; django server를 브라우저로 확인</br>
 
 ---
 ## Execution
-### Get server code & Run server
+### Run virtual environment & server
 `$ source [venv 이름]/bin/activate`  (windows에서 실행 시 `[venv 이름]\Scripts\activate`)</br>
 `$ cd Jay`</br>
 `$ python manage.py runserver` &rarr; django server를 브라우저로 확인</br>
 
-### Register & Login
-&darr; 아래의 기능은 django server에서 진행
-- `/api/v1/user/register/` 에서 `POST`로 회원가입 진행</br>
-- `/api/v1/user/login/` 에서 `POST`로 아래와 같이 선택 및 작성 후 로그인 진행</br></br>
-  ```
-  - Media type : application/json
-  - Content : {"username":"[본인 username]", "password":"[본인 password]"}
-  ```
-- `/api/v1/user/detail/` 에서 `GET`으로 사용자 정보 조회 </br>
-- `/api/v1/user/logout/` 에서 `GET`으로 로그아웃 진행</br>
-
-### Create Container
-&darr; 아래의 기능은 django server에서 진행. Login 후 컨테이너 생성 가능
-- `/api/v1/container/` 에서 `GET`으로 본인의 컨테이너 정보 조회 </br>
-- `/api/v1/container/` 에서 `POST`로 본인의 컨테이너 생성 &rarr; Content는 빈 공간으로 유지</br></br>
-    ```
-  - Media type : application/json
-  - Content : 
-  ```
-  ※ 이미 컨테이너를 생성한 경우 추가로 컨테이너 생성은 불가함</br>
+&darr; 아래의 링크에서 api 명세를 확인 후 DRF에서 제공하는 browsable api에서 진행</br>
+[API 명세서](https://www.notion.so/API-1661370fcdd54fc7987f7e48e42192c8?pvs=4)
