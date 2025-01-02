@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             model_name="userinfo",
             name="password",
             field=models.CharField(
-                max_length=150, validators=[user.validators.CustomPasswordValidator]
+                max_length=150, validators=[user.validators.PasswordValidator]
             ),
         ),
     ]
